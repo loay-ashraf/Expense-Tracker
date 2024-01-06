@@ -48,6 +48,12 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     });
   }
 
+  void _readdExpense({required Expense expense, required int expenseIndex}) {
+    setState(() {
+      _expenses.insert(expenseIndex, expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +70,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         body: HomeScreen(
           expenses: _expenses,
           onRemoveExpense: _removeExpense,
+          onReaddExpense: _readdExpense,
         ));
   }
 }
