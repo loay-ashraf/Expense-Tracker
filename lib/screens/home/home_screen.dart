@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:expense_tracker/screens/home/chart.dart';
-import 'expenses_list.dart';
+import 'widgets/chart.dart';
+import 'widgets/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 
 class HomeScreen extends StatelessWidget {

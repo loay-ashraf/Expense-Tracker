@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/screens/home/home_screen.dart';
 import 'package:expense_tracker/screens/add_new_expense/add_new_expense_screen.dart';
 import 'package:expense_tracker/models/expense.dart';
+import 'package:expense_tracker/models/category.dart';
 
 class ExpenseTrackerApp extends StatefulWidget {
   ExpenseTrackerApp({super.key});
