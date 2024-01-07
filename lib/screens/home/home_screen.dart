@@ -6,15 +6,18 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
     required List<Expense> expenses,
+    required void Function({required BuildContext context}) onAddNewExpense,
     required void Function({required Expense expense}) onRemoveExpense,
     required void Function(
             {required Expense expense, required int expenseIndex})
         onReaddExpense,
   })  : _expenses = expenses,
+        _onAddNewExpense = onAddNewExpense,
         _onRemoveExpense = onRemoveExpense,
         _onReaddExpense = onReaddExpense;
 
   final List<Expense> _expenses;
+  final void Function({required BuildContext context}) _onAddNewExpense;
   final void Function({required Expense expense}) _onRemoveExpense;
   final void Function({required Expense expense, required int expenseIndex})
       _onReaddExpense;
@@ -54,13 +57,27 @@ class HomeScreen extends StatelessWidget {
       );
     }
 
-    return Column(
-      children: [
-        const Text('The chart'),
-        Expanded(
-          child: mainContent,
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter ExpenseTracker'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              _onAddNewExpense(context: context);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          const Text('The chart'),
+          Expanded(
+            child: mainContent,
+          ),
+        ],
+      ),
     );
   }
 }
