@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expense_tracker/screens/home/chart.dart';
 import 'expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 
@@ -72,7 +73,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Text('The chart'),
+          Chart(expenses: _expenses),
           Expanded(
             child: mainContent,
           ),

@@ -81,7 +81,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
             foregroundColor: widget.kDarkColorScheme.onPrimaryContainer,
           ),
         ),
-        textTheme: ThemeData().textTheme.copyWith(
+        textTheme: ThemeData.dark().textTheme.copyWith(
               titleLarge: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: widget.kDarkColorScheme.onSecondaryContainer,
