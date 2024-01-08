@@ -5,12 +5,12 @@ import 'package:sqflite/sqflite.dart';
 import 'database_table.dart';
 import 'database_table_exists_extension.dart';
 
-class DatabaseFacade<Table extends DatabaseTable> {
-  DatabaseFacade({required Database database}) : _database = database;
+class DatabaseHelper<Table extends DatabaseTable> {
+  DatabaseHelper({required Database database}) : _database = database;
 
   final Database _database;
 
-  static Future<DatabaseFacade<Table>?> initialize<Table extends DatabaseTable>(
+  static Future<DatabaseHelper<Table>?> initialize<Table extends DatabaseTable>(
       {required String databaseFile}) async {
     String databasePath = '';
     if (Platform.isAndroid) {
@@ -20,7 +20,7 @@ class DatabaseFacade<Table extends DatabaseTable> {
       databasePath = join(libraryDirectory.path, databaseFile);
     }
     Database database = await openDatabase(databasePath);
-    return DatabaseFacade<Table>(database: database);
+    return DatabaseHelper<Table>(database: database);
   }
 
   Future createTable(
