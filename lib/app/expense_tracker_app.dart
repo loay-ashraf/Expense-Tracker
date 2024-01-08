@@ -7,16 +7,7 @@ import 'package:expense_tracker/database/database_facade.dart';
 import 'package:expense_tracker/database/app_database_table.dart';
 
 class ExpenseTrackerApp extends StatefulWidget {
-  ExpenseTrackerApp({super.key});
-
-  // final ColorScheme kColorScheme = ColorScheme.fromSeed(
-  //   seedColor: const Color.fromARGB(255, 96, 59, 181),
-  // );
-
-  // final ColorScheme kDarkColorScheme = ColorScheme.fromSeed(
-  //   brightness: Brightness.dark,
-  //   seedColor: const Color.fromARGB(255, 5, 99, 125),
-  // );
+  const ExpenseTrackerApp({super.key});
 
   @override
   State<ExpenseTrackerApp> createState() {
