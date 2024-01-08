@@ -60,7 +60,7 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
     }
 
     widget.onAddExpense(
-      expense: Expense(
+      expense: Expense.withID(
         title: _titleController.text,
         amount: enteredAmount,
         date: _selectedDate!,
