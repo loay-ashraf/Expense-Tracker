@@ -59,6 +59,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      enableDrag: false,
       builder: (ctx) => AddNewExpenseScreen(
         onAddExpense: _addExpense,
       ),
