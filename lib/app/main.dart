@@ -3,6 +3,6 @@ import 'expense_tracker_app.dart';
 
 void main() {
   runApp(
-    ExpenseTrackerApp(),
+    const ExpenseTrackerApp(),
   );
 }
