@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter ExpenseTracker'),
+        title: const Text('Expense Tracker'),
         centerTitle: false,
         actions: [
           IconButton(
