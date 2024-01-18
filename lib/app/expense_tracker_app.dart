@@ -60,8 +60,13 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
   void _addNewExpense({required BuildContext context}) {
     showModalBottomSheet(
       context: context,
+      useSafeArea: true,
       isScrollControlled: true,
       enableDrag: false,
+      constraints: const BoxConstraints(
+        maxHeight: double.infinity,
+        maxWidth: double.infinity,
+      ),
       builder: (ctx) => AddNewExpenseScreen(
         onAddExpense: _addExpense,
       ),

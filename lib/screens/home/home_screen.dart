@@ -42,6 +42,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
@@ -71,14 +73,25 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _expenses),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+      body: width < 600
+          ? Column(
+              children: [
+                Chart(expenses: _expenses),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Chart(expenses: _expenses),
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
     );
   }
 }

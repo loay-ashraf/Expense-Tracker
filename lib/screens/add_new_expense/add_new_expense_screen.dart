@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'widgets/expenses_first_row.dart';
+import 'widgets/expenses_second_row.dart';
+import 'widgets/expenses_third_row.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/models/category.dart';
-import 'package:flutter/services.dart';
 
 class AddNewExpenseScreen extends StatefulWidget {
   const AddNewExpenseScreen({super.key, required this.onAddExpense});
@@ -27,7 +30,7 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
     super.dispose();
   }
 
-  void _presentDatePicker() async {
+  void _onPresentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
     final pickedDate = await showDatePicker(
@@ -38,6 +41,15 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
     );
     setState(() {
       _selectedDate = pickedDate;
+    });
+  }
+
+  void _onSelectCategory(Category? category) {
+    if (category == null) {
+      return;
+    }
+    setState(() {
+      _selectedCategory = category;
     });
   }
 
@@ -97,106 +109,42 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: MediaQuery.of(context).platformBrightness == Brightness.light
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 60, 16, 16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              maxLength: 50,
-              decoration: const InputDecoration(
-                label: Text('Title'),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+    final double keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return LayoutBuilder(builder: (ctx, constraints) {
+      final double width = constraints.maxWidth;
+      return SizedBox(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _amountController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                      signed: false,
-                    ),
-                    decoration: const InputDecoration(
-                      prefixText: '\$ ',
-                      label: Text('Amount'),
-                    ),
-                  ),
+                ExpensesFirstRow(
+                  isPortrait: width < 600,
+                  titleController: _titleController,
+                  amountController: _amountController,
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        _selectedDate == null
-                            ? 'No date selected'
-                            : formatter.format(_selectedDate!),
-                      ),
-                      IconButton(
-                        onPressed: _presentDatePicker,
-                        icon: const Icon(
-                          Icons.calendar_month,
-                        ),
-                      ),
-                    ],
-                  ),
+                const SizedBox(height: 20),
+                ExpensesSecondRow(
+                  isPortrait: width < 600,
+                  selectedDate: _selectedDate,
+                  selectedCategory: _selectedCategory,
+                  amountController: _amountController,
+                  onPresentDatePicker: _onPresentDatePicker,
+                  onSelectCategory: _onSelectCategory,
                 ),
+                const SizedBox(height: 20),
+                ExpensesThirdRow(
+                    isPortrait: width < 600,
+                    selectedCategory: _selectedCategory,
+                    onSelectCategory: _onSelectCategory,
+                    onSubmit: _submit,
+                    onExit: _exit),
               ],
             ),
-            const SizedBox(height: 20),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DropdownButton(
-                  value: _selectedCategory,
-                  items: Category.values
-                      .map(
-                        (category) => DropdownMenuItem(
-                          value: category,
-                          child: Text(
-                            category.name.toUpperCase(),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value == null) {
-                      return;
-                    }
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  },
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () {
-                    _exit();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await _submit();
-                  },
-                  child: const Text('Save Expense'),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
