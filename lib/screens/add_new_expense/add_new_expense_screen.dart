@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'widgets/expenses_first_row.dart';
 import 'widgets/expenses_second_row.dart';
 import 'widgets/expenses_third_row.dart';
@@ -85,9 +84,9 @@ class _AddNewExpenseScreenState extends State<AddNewExpenseScreen> {
   }
 
   Future _showValidationDialog() async {
-    await showDialog(
+    await showAdaptiveDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (ctx) => AlertDialog.adaptive(
         title: const Text('Invalid input'),
         content: const Text(
             'Please make sure a valid title, amount, date and category was entered.'),
